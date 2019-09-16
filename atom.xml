@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://melody19930605.github.io/</id>
     <title>Melody</title>
-    <updated>2019-09-16T11:26:39.178Z</updated>
+    <updated>2019-09-16T11:27:09.357Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://melody19930605.github.io/"/>
     <link rel="self" href="https://melody19930605.github.io//atom.xml"/>
@@ -18,7 +18,7 @@
         <updated>2019-09-16T11:21:55.000Z</updated>
         <content type="html"><![CDATA[<!-- more -->
 <p>关于GitHub Pages</p>
-<p>终于在有一个MarkDown软件可以代替手动部署了，感觉非常强大，线体验一下，后面会写点随笔之类的记录一下。</p>
+<p>终于在有一个MarkDown软件可以代替手动部署了，感觉非常强大，先体验一下，后面会写点随笔之类的记录一下。</p>
 ]]></content>
     </entry>
     <entry>
