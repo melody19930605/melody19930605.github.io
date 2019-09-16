@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://melody19930605.github.io/</id>
+    <id>D:/MyConfiguration/lx17448/Documents/Gridea/output</id>
     <title>Melody</title>
-    <updated>2019-09-16T11:28:31.554Z</updated>
+    <updated>2019-09-16T11:29:11.996Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://melody19930605.github.io/"/>
-    <link rel="self" href="https://melody19930605.github.io//atom.xml"/>
+    <link rel="alternate" href="D:/MyConfiguration/lx17448/Documents/Gridea/output"/>
+    <link rel="self" href="D:/MyConfiguration/lx17448/Documents/Gridea/output/atom.xml"/>
     <subtitle>温故而知新</subtitle>
-    <logo>https://melody19930605.github.io//images/avatar.png</logo>
-    <icon>https://melody19930605.github.io//favicon.ico</icon>
+    <logo>D:/MyConfiguration/lx17448/Documents/Gridea/output/images/avatar.png</logo>
+    <icon>D:/MyConfiguration/lx17448/Documents/Gridea/output/favicon.ico</icon>
     <rights>All rights reserved 2019, Melody</rights>
     <entry>
         <title type="html"><![CDATA[Hello GitHub]]></title>
-        <id>https://melody19930605.github.io//post/hello-github</id>
-        <link href="https://melody19930605.github.io//post/hello-github">
+        <id>D:/MyConfiguration/lx17448/Documents/Gridea/output/post/hello-github/index.html</id>
+        <link href="D:/MyConfiguration/lx17448/Documents/Gridea/output/post/hello-github/index.html">
         </link>
         <updated>2019-09-16T11:21:55.000Z</updated>
         <summary type="html"><![CDATA[<p>关于GitHub Pages</p>
@@ -25,8 +25,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://melody19930605.github.io//post/hello-gridea</id>
-        <link href="https://melody19930605.github.io//post/hello-gridea">
+        <id>D:/MyConfiguration/lx17448/Documents/Gridea/output/post/hello-gridea/index.html</id>
+        <link href="D:/MyConfiguration/lx17448/Documents/Gridea/output/post/hello-gridea/index.html">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
