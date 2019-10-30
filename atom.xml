@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://melody19930605.github.io/</id>
     <title>Melody</title>
-    <updated>2019-10-23T10:54:33.382Z</updated>
+    <updated>2019-10-30T09:14:16.023Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://melody19930605.github.io/"/>
     <link rel="self" href="https://melody19930605.github.io//atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://melody19930605.github.io//images/avatar.png</logo>
     <icon>https://melody19930605.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Melody</rights>
+    <entry>
+        <title type="html"><![CDATA[From Now On]]></title>
+        <id>https://melody19930605.github.io//post/from-now-on</id>
+        <link href="https://melody19930605.github.io//post/from-now-on">
+        </link>
+        <updated>2019-10-30T09:13:21.000Z</updated>
+        <content type="html"><![CDATA[<p>一个人的喜欢是重蹈覆辙<br>
+两个人的喜欢是失而复得</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello GitHub]]></title>
         <id>https://melody19930605.github.io//post/hello-github</id>
