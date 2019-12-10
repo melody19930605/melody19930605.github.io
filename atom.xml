@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://melody19930605.github.io/</id>
     <title>Melody</title>
-    <updated>2019-10-30T09:14:47.939Z</updated>
+    <updated>2019-12-10T12:16:30.742Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://melody19930605.github.io/"/>
     <link rel="self" href="https://melody19930605.github.io//atom.xml"/>
@@ -10,6 +10,107 @@
     <logo>https://melody19930605.github.io//images/avatar.png</logo>
     <icon>https://melody19930605.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Melody</rights>
+    <entry>
+        <title type="html"><![CDATA[利用Python生成C#实体]]></title>
+        <id>https://melody19930605.github.io//post/li-yong-python-sheng-cheng-cshi-ti</id>
+        <link href="https://melody19930605.github.io//post/li-yong-python-sheng-cheng-cshi-ti">
+        </link>
+        <updated>2019-12-10T12:14:03.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-python"># -*- coding: UTF-8 -*-
+
+import pymysql
+
+
+def TypeChange(typeName):
+    if typeName == &quot;bigint&quot;:
+        return &quot;long&quot;
+    elif typeName == &quot;varchar&quot;:
+        return &quot;string&quot;
+    elif typeName == &quot;datetime&quot;:
+        return &quot;DateTime&quot;
+    elif typeName == &quot;int&quot;:
+        return &quot;int&quot;
+    elif typeName == &quot;decimal&quot;:
+        return &quot;decimal&quot;
+    else:
+        return &quot;&quot;
+
+
+def ColumnNameChange(columnName, prefix):
+    if len(columnName) &lt; len(prefix):
+        return columnName
+    elif columnName[0:len(prefix)] == prefix:
+        return columnName[len(prefix):len(columnName)]
+    else:
+        return columnName
+
+
+tableName = input(&quot;请输入表名：&quot;)
+dataModelName = input(&quot;请输入实体名称：&quot;)
+prefix = input(&quot;字段前缀名：&quot;)
+
+# 新建数据库连接
+conn = pymysql.connect(
+    host='',
+    port=,
+    user='',
+    password='',
+    db='',
+    charset='utf8')
+# 2获取游标
+cursor = conn.cursor()
+# 3执行查询，并获取查询的总行数
+rowNums = cursor.execute('''SELECT COLUMN_NAME 列名,  
+COLUMN_TYPE 数据类型,  
+DATA_TYPE 字段类型,  
+CHARACTER_MAXIMUM_LENGTH 长度,  
+IS_NULLABLE 是否为空,  
+COLUMN_DEFAULT 默认值,  
+COLUMN_COMMENT 备注   
+FROM INFORMATION_SCHEMA.COLUMNS 
+where table_name = &quot;''' + tableName + '''&quot; ''')
+
+# 4.遍历结果，获取查询的结果
+newtxt = '''
+/// &lt;summary&gt;
+/// ''' + tableName + '''
+/// &lt;/summary&gt;
+[Table(&quot;''' + tableName + '''&quot;)]
+public class ''' + dataModelName + '''
+{
+    XXXX
+}
+'''
+innertxt = ''
+ResultList = cursor.fetchall()
+for i in range(len(ResultList)):
+    innertxt = innertxt + '''
+    /// &lt;summary&gt;
+    /// %s
+    /// &lt;/summary&gt;
+    [Column(&quot;%s&quot;)]
+    [DisplayName(&quot;%s&quot;)]
+    public %s %s { get; set; }
+    ''' % (ResultList[i][6], ResultList[i][0], ResultList[i][6],
+           TypeChange(ResultList[i][2]), 
+           ColumnNameChange(ResultList[i][0], prefix))
+
+    # print(ResultList[i])
+# 提交如果需要插入语句的时候使用commit
+# conn.commit()
+# 关闭
+cursor.close()
+conn.close()
+
+f = open(dataModelName + '.cs', mode=&quot;w&quot;, encoding=&quot;utf8&quot;)
+f.write(newtxt.replace(&quot;XXXX&quot;, innertxt))
+f.flush()
+f.close()
+
+print(&quot;生成完成&quot;)
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[From Now On]]></title>
         <id>https://melody19930605.github.io//post/from-now-on</id>

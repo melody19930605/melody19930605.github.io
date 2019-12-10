@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Melody</title>
+<title>利用Python生成C#实体 | Melody</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1575980180019">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -73,21 +73,113 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              利用Python生成C#实体
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2019-12-10
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>这是关于的页面，可以在这里向世界介绍你！</p>
+                <pre><code class="language-python"># -*- coding: UTF-8 -*-
+
+import pymysql
+
+
+def TypeChange(typeName):
+    if typeName == &quot;bigint&quot;:
+        return &quot;long&quot;
+    elif typeName == &quot;varchar&quot;:
+        return &quot;string&quot;
+    elif typeName == &quot;datetime&quot;:
+        return &quot;DateTime&quot;
+    elif typeName == &quot;int&quot;:
+        return &quot;int&quot;
+    elif typeName == &quot;decimal&quot;:
+        return &quot;decimal&quot;
+    else:
+        return &quot;&quot;
+
+
+def ColumnNameChange(columnName, prefix):
+    if len(columnName) &lt; len(prefix):
+        return columnName
+    elif columnName[0:len(prefix)] == prefix:
+        return columnName[len(prefix):len(columnName)]
+    else:
+        return columnName
+
+
+tableName = input(&quot;请输入表名：&quot;)
+dataModelName = input(&quot;请输入实体名称：&quot;)
+prefix = input(&quot;字段前缀名：&quot;)
+
+# 新建数据库连接
+conn = pymysql.connect(
+    host='',
+    port=,
+    user='',
+    password='',
+    db='',
+    charset='utf8')
+# 2获取游标
+cursor = conn.cursor()
+# 3执行查询，并获取查询的总行数
+rowNums = cursor.execute('''SELECT COLUMN_NAME 列名,  
+COLUMN_TYPE 数据类型,  
+DATA_TYPE 字段类型,  
+CHARACTER_MAXIMUM_LENGTH 长度,  
+IS_NULLABLE 是否为空,  
+COLUMN_DEFAULT 默认值,  
+COLUMN_COMMENT 备注   
+FROM INFORMATION_SCHEMA.COLUMNS 
+where table_name = &quot;''' + tableName + '''&quot; ''')
+
+# 4.遍历结果，获取查询的结果
+newtxt = '''
+/// &lt;summary&gt;
+/// ''' + tableName + '''
+/// &lt;/summary&gt;
+[Table(&quot;''' + tableName + '''&quot;)]
+public class ''' + dataModelName + '''
+{
+    XXXX
+}
+'''
+innertxt = ''
+ResultList = cursor.fetchall()
+for i in range(len(ResultList)):
+    innertxt = innertxt + '''
+    /// &lt;summary&gt;
+    /// %s
+    /// &lt;/summary&gt;
+    [Column(&quot;%s&quot;)]
+    [DisplayName(&quot;%s&quot;)]
+    public %s %s { get; set; }
+    ''' % (ResultList[i][6], ResultList[i][0], ResultList[i][6],
+           TypeChange(ResultList[i][2]), 
+           ColumnNameChange(ResultList[i][0], prefix))
+
+    # print(ResultList[i])
+# 提交如果需要插入语句的时候使用commit
+# conn.commit()
+# 关闭
+cursor.close()
+conn.close()
+
+f = open(dataModelName + '.cs', mode=&quot;w&quot;, encoding=&quot;utf8&quot;)
+f.write(newtxt.replace(&quot;XXXX&quot;, innertxt))
+f.flush()
+f.close()
+
+print(&quot;生成完成&quot;)
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -97,6 +189,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://melody19930605.github.io//post/from-now-on">
+              <h3 class="post-title">
+                From Now On
+              </h3>
+            </a>
+          </div>
         
 
         
