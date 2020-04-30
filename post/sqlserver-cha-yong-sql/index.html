@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello GitHub | Melody</title>
+<title>SqlServer查用SQL | Melody</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1588239796074">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -73,11 +73,11 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello GitHub
+              SqlServer查用SQL
             </h2>
             <div class="post-info">
               <span>
-                2019-09-16
+                2020-04-30
               </span>
               <span>
                 1 min read
@@ -87,9 +87,19 @@
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>关于GitHub Pages</p>
-<!-- more -->
-<p>终于在有一个MarkDown软件可以代替手动部署了，感觉非常强大，先体验一下，后面会写点随笔之类的记录一下。</p>
+                <pre><code class="language-sql">SELECT   索引名称=a.name  
+,表名=c.name  
+,索引字段名=d.name  
+,索引字段位置=d.colid  
+FROM   sysindexes   a  
+JOIN   sysindexkeys   b   ON   a.id=b.id   AND   a.indid=b.indid  
+JOIN   sysobjects   c   ON   b.id=c.id  
+JOIN   syscolumns   d   ON   b.id=d.id   AND   b.colid=d.colid  
+WHERE   a.indid   NOT IN(0,255)  
+-- and   c.xtype='U'   and   c.status&gt;0 --查所有用户表  
+AND   c.name='AR_OrderPay' --查指定表  
+ORDER BY   c.name,a.name,d.name
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -102,9 +112,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://melody19930605.github.io//post/hello-gridea">
+            <a href="https://melody19930605.github.io//post/li-yong-python-sheng-cheng-cshi-ti">
               <h3 class="post-title">
-                Hello Gridea
+                利用Python生成C#实体
               </h3>
             </a>
           </div>
