@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>From Now On | Melody</title>
+<title>C#代码片段 | Melody</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1588240094606">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -73,22 +73,108 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              From Now On
+              C#代码片段
             </h2>
             <div class="post-info">
               <span>
-                2019-10-30
+                2020-04-30
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>一个人的喜欢是重蹈覆辙<br>
-两个人的喜欢是失而复得</p>
+                <pre><code class="language-cs">/// &lt;summary&gt;
+    /// 实体转换器
+    /// &lt;/summary&gt;
+    public static class DefaultModelAdapter
+    {
+        /// &lt;summary&gt;
+        /// 实体转换器(指定列转换)
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;目标实体&lt;/typeparam&gt;
+        /// &lt;typeparam name=&quot;TSource&quot;&gt;源实体&lt;/typeparam&gt;
+        /// &lt;param name=&quot;t&quot;&gt;目标实体&lt;/param&gt;
+        /// &lt;param name=&quot;source&quot;&gt;源实体&lt;/param&gt;
+        /// &lt;param name=&quot;express&quot;&gt;指定需要将源实体的字段赋值给目标实体的字段(不传默认全部替换)&lt;/param&gt;
+        public static void Transfer&lt;T, TSource&gt;(T t, TSource source, params Expression&lt;Func&lt;T, object&gt;&gt;[] express)
+        {
+            // 源实体的所有字段
+            var sourceValues = source.GetType().GetProperties();
+            // 目标实体的所有字段
+            var targetVaules = t.GetType().GetProperties();
+            // 获取所有需要替换的字段名称
+            var columnNames = express.Select(item =&gt; GetPropName(item.Body)).ToList();
+            // 需要更新的键值对
+            var updates = sourceValues.Where(pi =&gt; columnNames.Contains(pi.Name)).ToDictionary(pi =&gt; pi.Name, pi =&gt; pi.GetValue(source, null));
+            // 更新
+            foreach (var item in updates)
+            {
+                foreach (var pi in targetVaules)
+                {
+                    if (pi.Name == item.Key)
+                    {
+                        pi.SetValue(t, item.Value);
+                    }
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// 实体转换器(全部转换)
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;目标实体&lt;/typeparam&gt;
+        /// &lt;typeparam name=&quot;TSource&quot;&gt;源实体&lt;/typeparam&gt;
+        /// &lt;param name=&quot;t&quot;&gt;目标实体&lt;/param&gt;
+        /// &lt;param name=&quot;source&quot;&gt;源实体&lt;/param&gt;
+        public static void Transfer&lt;T, TSource&gt;(T t, TSource source)
+        {
+            // 源实体的所有字段
+            var sourceValues = source.GetType().GetProperties();
+            // 目标实体的所有字段
+            var targetVaules = t.GetType().GetProperties();
+            // 需要更新的键值对
+            var updates = sourceValues.ToDictionary(pi =&gt; pi.Name, pi =&gt; pi.GetValue(source, null));
+            // 更新
+            foreach (var item in updates)
+            {
+                foreach (var pi in targetVaules)
+                {
+                    if (pi.Name == item.Key)
+                    {
+                        pi.SetValue(t, item.Value);
+                    }
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Lambda表达式转换
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;express&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static string GetPropName(Expression express)
+        {
+            var str = string.Empty;
+            if (express is MemberExpression)
+            {
+                str = ((MemberExpression) express).Member.Name;
+            }
+            else if (express is UnaryExpression)
+            {
+                str = ((MemberExpression) ((UnaryExpression) express).Operand).Member.Name;
+            }
+            else if (express is ParameterExpression)
+            {
+                str = ((ParameterExpression) express).Type.Name;
+            }
+            return str;
+        }
+    }
+</code></pre>
 
               </div>
               <div class="toc-container">
@@ -101,9 +187,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://melody19930605.github.io//post/hello-github">
+            <a href="https://melody19930605.github.io//post/sqlserver-cha-yong-sql">
               <h3 class="post-title">
-                Hello GitHub
+                SqlServer查用SQL
               </h3>
             </a>
           </div>

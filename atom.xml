@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://melody19930605.github.io/</id>
     <title>Melody</title>
-    <updated>2020-04-30T09:46:42.632Z</updated>
+    <updated>2020-04-30T09:48:18.839Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://melody19930605.github.io/"/>
     <link rel="self" href="https://melody19930605.github.io//atom.xml"/>
@@ -10,6 +10,102 @@
     <logo>https://melody19930605.github.io//images/avatar.png</logo>
     <icon>https://melody19930605.github.io//favicon.ico</icon>
     <rights>All rights reserved 2020, Melody</rights>
+    <entry>
+        <title type="html"><![CDATA[C#代码片段]]></title>
+        <id>https://melody19930605.github.io//post/cdai-ma-pian-duan</id>
+        <link href="https://melody19930605.github.io//post/cdai-ma-pian-duan">
+        </link>
+        <updated>2020-04-30T09:47:28.000Z</updated>
+        <content type="html"><![CDATA[<pre><code class="language-cs">/// &lt;summary&gt;
+    /// 实体转换器
+    /// &lt;/summary&gt;
+    public static class DefaultModelAdapter
+    {
+        /// &lt;summary&gt;
+        /// 实体转换器(指定列转换)
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;目标实体&lt;/typeparam&gt;
+        /// &lt;typeparam name=&quot;TSource&quot;&gt;源实体&lt;/typeparam&gt;
+        /// &lt;param name=&quot;t&quot;&gt;目标实体&lt;/param&gt;
+        /// &lt;param name=&quot;source&quot;&gt;源实体&lt;/param&gt;
+        /// &lt;param name=&quot;express&quot;&gt;指定需要将源实体的字段赋值给目标实体的字段(不传默认全部替换)&lt;/param&gt;
+        public static void Transfer&lt;T, TSource&gt;(T t, TSource source, params Expression&lt;Func&lt;T, object&gt;&gt;[] express)
+        {
+            // 源实体的所有字段
+            var sourceValues = source.GetType().GetProperties();
+            // 目标实体的所有字段
+            var targetVaules = t.GetType().GetProperties();
+            // 获取所有需要替换的字段名称
+            var columnNames = express.Select(item =&gt; GetPropName(item.Body)).ToList();
+            // 需要更新的键值对
+            var updates = sourceValues.Where(pi =&gt; columnNames.Contains(pi.Name)).ToDictionary(pi =&gt; pi.Name, pi =&gt; pi.GetValue(source, null));
+            // 更新
+            foreach (var item in updates)
+            {
+                foreach (var pi in targetVaules)
+                {
+                    if (pi.Name == item.Key)
+                    {
+                        pi.SetValue(t, item.Value);
+                    }
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// 实体转换器(全部转换)
+        /// &lt;/summary&gt;
+        /// &lt;typeparam name=&quot;T&quot;&gt;目标实体&lt;/typeparam&gt;
+        /// &lt;typeparam name=&quot;TSource&quot;&gt;源实体&lt;/typeparam&gt;
+        /// &lt;param name=&quot;t&quot;&gt;目标实体&lt;/param&gt;
+        /// &lt;param name=&quot;source&quot;&gt;源实体&lt;/param&gt;
+        public static void Transfer&lt;T, TSource&gt;(T t, TSource source)
+        {
+            // 源实体的所有字段
+            var sourceValues = source.GetType().GetProperties();
+            // 目标实体的所有字段
+            var targetVaules = t.GetType().GetProperties();
+            // 需要更新的键值对
+            var updates = sourceValues.ToDictionary(pi =&gt; pi.Name, pi =&gt; pi.GetValue(source, null));
+            // 更新
+            foreach (var item in updates)
+            {
+                foreach (var pi in targetVaules)
+                {
+                    if (pi.Name == item.Key)
+                    {
+                        pi.SetValue(t, item.Value);
+                    }
+                }
+            }
+        }
+
+        /// &lt;summary&gt;
+        /// Lambda表达式转换
+        /// &lt;/summary&gt;
+        /// &lt;param name=&quot;express&quot;&gt;&lt;/param&gt;
+        /// &lt;returns&gt;&lt;/returns&gt;
+        public static string GetPropName(Expression express)
+        {
+            var str = string.Empty;
+            if (express is MemberExpression)
+            {
+                str = ((MemberExpression) express).Member.Name;
+            }
+            else if (express is UnaryExpression)
+            {
+                str = ((MemberExpression) ((UnaryExpression) express).Operand).Member.Name;
+            }
+            else if (express is ParameterExpression)
+            {
+                str = ((ParameterExpression) express).Type.Name;
+            }
+            return str;
+        }
+    }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[SqlServer查用SQL]]></title>
         <id>https://melody19930605.github.io//post/sqlserver-cha-yong-sql</id>
