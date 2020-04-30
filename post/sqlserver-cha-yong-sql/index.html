@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SqlServer查用SQL | Melody</title>
 <meta name="description" content="温故而知新" />
-<link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1588240344852">
+<link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1588240636222">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://melody19930605.github.io//styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://melody19930605.github.io/">
-  <img class="avatar" src="https://melody19930605.github.io//images/avatar.png?v=1588240344852" alt="">
+  <img class="avatar" src="https://melody19930605.github.io//images/avatar.png?v=1588240636222" alt="">
   </a>
   <h1 class="site-title">
     Melody
@@ -102,36 +102,20 @@ AND   c.name='tableName' --查指定表
 ORDER BY   c.name,a.name,d.name
 </code></pre>
 <h1 id="数据库表查询">数据库表查询</h1>
-<pre><code class="language-sql">SELECT  d.name 表名,
-        a.colorder 字段序号,
-        a.name 字段名,
-        --(CASE WHEN COLUMNPROPERTY( a.id,a.name,'IsIdentity')=1 THEN '√' ELSE '' END) 标识,
-        --(CASE WHEN (
-        --    SELECT COUNT(*)
-        --    FROM sysobjects
-        --    WHERE (name IN
-        --              (SELECT name
-        --              FROM sysindexes
-        --              WHERE (id = a.id) AND (indid IN
-        --                        (SELECT indid
-        --                        FROM sysindexkeys
-        --                      WHERE (id = a.id) AND (colid IN
-        --                    (SELECT colid
-        --                                FROM syscolumns
-        --                                WHERE (id = a.id) AND (name = a.name))))))) AND
-        --            (xtype = 'PK'))&gt;0 THEN '√' ELSE '' END) 主键,
-        b.name 类型,
-        a.length 占用字节数,
-        COLUMNPROPERTY(a.id,a.name,'PRECISION') AS 长度,
-        --ISNULL(COLUMNPROPERTY(a.id,a.name,'Scale'),0) AS 小数位数,
-        --(CASE WHEN a.isnullable=1 THEN '√' ELSE '' END) 允许空,
-        ISNULL(e.text,'') 默认值,
-      ISNULL(g.[value],'') AS 字段说明
+<pre><code class="language-sql">SELECT  
+d.name 表名,
+a.colorder 字段序号,
+a.name 字段名,
+b.name 类型,
+a.length 占用字节数,
+COLUMNPROPERTY(a.id,a.name,'PRECISION') AS 长度,
+ISNULL(e.text,'') 默认值,
+ISNULL(g.[value],'') AS 字段说明
 FROM syscolumns a
-    LEFT JOIN systypes b ON a.xtype=b.xusertype
-    INNER JOIN sysobjects d ON a.id=d.id AND d.xtype='U' AND d.name &lt;&gt;'dtproperties'
-    LEFT JOIN syscomments e ON a.cdefault=e.id
-    LEFT JOIN sys.extended_properties g  ON a.id=g.major_id AND a.colid = g.minor_id
+LEFT JOIN systypes b ON a.xtype=b.xusertype
+INNER JOIN sysobjects d ON a.id=d.id AND d.xtype='U' AND d.name &lt;&gt;'dtproperties'
+LEFT JOIN syscomments e ON a.cdefault=e.id
+LEFT JOIN sys.extended_properties g  ON a.id=g.major_id AND a.colid = g.minor_id
 WHERE d.name='tableName'
 ORDER BY a.id,a.colorder
 </code></pre>
