@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MySQL | Melody</title>
 <meta name="description" content="温故而知新" />
-<link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1588755224668">
+<link rel="shortcut icon" href="https://melody19930605.github.io//favicon.ico?v=1588755610911">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://melody19930605.github.io//styles/main.css">
@@ -20,7 +20,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://melody19930605.github.io/">
-  <img class="avatar" src="https://melody19930605.github.io//images/avatar.png?v=1588755224668" alt="">
+  <img class="avatar" src="https://melody19930605.github.io//images/avatar.png?v=1588755610911" alt="">
   </a>
   <h1 class="site-title">
     Melody
@@ -80,14 +80,27 @@
                 2020-05-06
               </span>
               <span>
-                0 min read
+                1 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <figure data-type="image" tabindex="1"><img src="https://melody19930605.github.io//post-images/1588755210344.png" alt="" loading="lazy"></figure>
+                <p>MySQL新建唯一索引时是不区分大小写的，如果需要区分需要添加<br>
+<strong>加唯一索引，binary是为了英文区分大小写，因为mysql的唯一索引不区分大小写</strong></p>
+<pre><code class="language-sql">CREATE TABLE
+Student
+(
+    id bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+    no VARCHAR(100) COMMENT '学号',
+    //加唯一索引，binary是为了英文区分大小写，因为mysql的唯一索引不区分大小写
+    name VARCHAR(100) binary NOT NULL unique  COMMENT '姓名'
+    createdOn DATETIME COMMENT '创建时间',
+    PRIMARY KEY (id)
+)
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生表'
+</code></pre>
 
               </div>
               <div class="toc-container">
