@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://melody19930605.github.io/</id>
     <title>Melody</title>
-    <updated>2020-05-25T05:39:44.044Z</updated>
+    <updated>2020-05-25T05:43:27.526Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://melody19930605.github.io/"/>
     <link rel="self" href="https://melody19930605.github.io/atom.xml"/>
@@ -129,7 +129,7 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生表'
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[SqlServer查用SQL]]></title>
+        <title type="html"><![CDATA[SqlServer常用SQL]]></title>
         <id>https://melody19930605.github.io/post/sqlserver-cha-yong-sql/</id>
         <link href="https://melody19930605.github.io/post/sqlserver-cha-yong-sql/">
         </link>
